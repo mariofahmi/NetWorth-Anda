@@ -3,21 +3,50 @@ import { AssetItem, LiabilityItem, MonthlyHistoryPoint, HabitItem, FireSettings,
 export const DEFAULT_USER_PROFILE: UserProfile = {
   name: 'Mario Fahmi Syahrial',
   age: 28,
-  savingsTargetAmount: 500_000_000, // Rp 500 Juta
+  savingsTargetAmount: 0,           // Rp 0 (Mulai dari nol)
   targetYear: 2030,                 // Target tahun 2030
+  targetTitle: 'Target Kemandirian Finansial',
+  notes: 'Mulai catat aset dan rencana tabungan untuk masa depan finansial Anda.',
+};
+
+export const DEFAULT_FIRE_SETTINGS: FireSettings = {
+  monthlyExpense: 0,        // Rp 0 per bulan
+  multiplier: 25,           // Standar 25x
+  expectedReturnRate: 8,    // 8% per tahun rata-rata di Indonesia
+  monthlyIncome: 0,         // Rp 0 per bulan
+  monthlySavings: 0,        // Rp 0 ditabung per bulan
+};
+
+// Default Aset Kosong (Rp 0)
+export const DEFAULT_ASSETS: AssetItem[] = [];
+
+// Default Utang Kosong (Rp 0)
+export const DEFAULT_LIABILITIES: LiabilityItem[] = [];
+
+// Default Riwayat Bulanan Kosong
+export const DEFAULT_MONTHLY_HISTORY: MonthlyHistoryPoint[] = [];
+
+// =========================================================================
+// DATA SIMULASI / CONTOH (DEMO)
+// =========================================================================
+export const DEMO_USER_PROFILE: UserProfile = {
+  name: 'Mario Fahmi Syahrial',
+  age: 28,
+  savingsTargetAmount: 500_000_000,
+  targetYear: 2030,
   targetTitle: 'Target Tabungan & Kemandirian Finansial',
   notes: 'Akumulasi dari tabungan bulanan, instrumen deposito, SBN, dan reksa dana',
 };
 
-export const DEFAULT_FIRE_SETTINGS: FireSettings = {
-  monthlyExpense: 7_500_000, // Rp 7.5 Jt per bulan
-  multiplier: 25,           // Standar 25x (bisa diubah ke 20x, 30x, 33x, atau custom)
-  expectedReturnRate: 8,    // 8% per tahun rata-rata di Indonesia
-  monthlyIncome: 12_000_000,// Rp 12 Jt per bulan
-  monthlySavings: 4_500_000,// Rp 4.5 Jt ditabung/investasi per bulan (Savings rate 37.5%)
+export const DEMO_FIRE_SETTINGS: FireSettings = {
+  monthlyExpense: 7_500_000,
+  multiplier: 25,
+  expectedReturnRate: 8,
+  monthlyIncome: 12_000_000,
+  monthlySavings: 4_500_000,
 };
 
-export const DEFAULT_ASSETS: AssetItem[] = [
+export const DEMO_ASSETS: AssetItem[] = [
   {
     id: 'asset-1',
     name: 'Tabungan Utama & Operasional',
@@ -92,7 +121,7 @@ export const DEFAULT_ASSETS: AssetItem[] = [
   },
 ];
 
-export const DEFAULT_LIABILITIES: LiabilityItem[] = [
+export const DEMO_LIABILITIES: LiabilityItem[] = [
   {
     id: 'liab-1',
     name: 'ShopeePayLater / Gopay Later',
@@ -125,7 +154,7 @@ export const DEFAULT_LIABILITIES: LiabilityItem[] = [
   },
 ];
 
-export const DEFAULT_MONTHLY_HISTORY: MonthlyHistoryPoint[] = [
+export const DEMO_MONTHLY_HISTORY: MonthlyHistoryPoint[] = [
   {
     id: 'hist-1',
     monthLabel: 'Nov 2025',
@@ -201,7 +230,7 @@ export const DEFAULT_HABITS: HabitItem[] = [
     period: 'harian',
     title: 'Catat Pengeluaran Hari Ini',
     subtitle: 'Semua jajan, transport ojol, dan makan siang jangan sampai ada bocor halus',
-    completed: true,
+    completed: false,
     tag: 'Disiplin',
   },
   {
@@ -209,7 +238,7 @@ export const DEFAULT_HABITS: HabitItem[] = [
     period: 'harian',
     title: 'Tahan Impulsif Belanja Promo',
     subtitle: 'Terapkan aturan 48 jam: jika mau beli barang non-pokok, tunda 2 hari dulu',
-    completed: true,
+    completed: false,
     tag: 'Mindful',
   },
   {
@@ -227,7 +256,7 @@ export const DEFAULT_HABITS: HabitItem[] = [
     period: 'mingguan',
     title: 'Evaluasi Anggaran Mingguan',
     subtitle: 'Cek sisa saldo di rekening operasional dan dompet digital (Gopay/ShopeePay)',
-    completed: true,
+    completed: false,
     tag: 'Review',
   },
   {
@@ -243,7 +272,7 @@ export const DEFAULT_HABITS: HabitItem[] = [
     period: 'mingguan',
     title: 'Cek Promo Tanpa Terjebak Belanja',
     subtitle: 'Hapus notifikasi e-commerce yang memicu FOMO barang tidak penting',
-    completed: true,
+    completed: false,
     tag: 'Fokus',
   },
 
@@ -253,7 +282,7 @@ export const DEFAULT_HABITS: HabitItem[] = [
     period: 'bulanan',
     title: 'Pay Yourself First (Langsung Investasi Pas Gajian)',
     subtitle: 'Sisihkan minimal 20-30% begitu gaji masuk sebelum mulai belanja apa pun',
-    completed: true,
+    completed: false,
     tag: 'Wajib',
   },
   {
@@ -261,7 +290,7 @@ export const DEFAULT_HABITS: HabitItem[] = [
     period: 'bulanan',
     title: 'Prioritaskan Lunasi Utang Bunga Tertinggi',
     subtitle: 'Lunasi Paylater / Kartu Kredit secara penuh (full payment) sebelum bunga menumpuk',
-    completed: true,
+    completed: false,
     tag: 'Prioritas',
   },
   {
@@ -277,7 +306,7 @@ export const DEFAULT_HABITS: HabitItem[] = [
     period: 'bulanan',
     title: 'Rekap Nilai Bersih (Simpan Snapshot Bulanan)',
     subtitle: 'Catat pertumbuhan aset dan penurunan liabilitas di aplikasi ini',
-    completed: true,
+    completed: false,
     tag: 'Tracking',
   },
 
@@ -287,7 +316,7 @@ export const DEFAULT_HABITS: HabitItem[] = [
     period: 'tahunan',
     title: 'Lapor SPT Tahunan Pajak Penghasilan (PPh 21)',
     subtitle: 'Laporkan bukti potong 1721-A1 sebelum tanggal 31 Maret via DJP Online',
-    completed: true,
+    completed: false,
     tag: 'Pajak',
   },
   {

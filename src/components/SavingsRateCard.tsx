@@ -31,7 +31,12 @@ export function SavingsRateCard({
   let tierTitle = 'Mulai Menabung';
   let tierDescription = 'Mulailah dengan menyisihkan minimal 10-20% pendapatan begitu gajian sebelum belanja.';
 
-  if (savingsRate >= 60) {
+  if (monthlyIncome === 0 && monthlySavings === 0) {
+    statusColor = 'text-neutral-700';
+    badgeColor = 'bg-stone-100 text-neutral-700 border-stone-200';
+    tierTitle = 'Mulai Menabung 🌱';
+    tierDescription = 'Masukkan angka penghasilan dan tabungan bulanan Anda di atas untuk mulai menghitung rasio tabungan.';
+  } else if (savingsRate >= 60) {
     statusColor = 'text-red-700';
     badgeColor = 'bg-red-100 text-red-800 border-red-300';
     tierTitle = 'Master Bebas Finansial 🚀';

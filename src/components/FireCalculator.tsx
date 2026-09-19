@@ -52,6 +52,7 @@ export function FireCalculator({
   // Estimate years to reach FIRE:
   // Using compound interest formula with monthly contributions
   const estimatedYearsToFire = useMemo(() => {
+    if (fireTarget <= 0) return null;
     if (netWorth >= fireTarget) return 0;
     if (settings.monthlySavings <= 0) return null;
 

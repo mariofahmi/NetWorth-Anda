@@ -34,19 +34,23 @@ export function SavingsTargetCard({
   const ageAtTarget = profile.age + yearsRemaining;
 
   // Calculate target progress
-  const targetAmount = Math.max(1, profile.savingsTargetAmount);
+  const targetAmount = profile.savingsTargetAmount;
   const currentAccumulation = Math.max(0, netWorth);
-  const progressPercent = Math.min(100, Math.max(0, (currentAccumulation / targetAmount) * 100));
-  const actualPercent = (currentAccumulation / targetAmount) * 100;
-  const remainingAmount = Math.max(0, targetAmount - currentAccumulation);
+  const progressPercent = targetAmount > 0 
+    ? Math.min(100, Math.max(0, (currentAccumulation / targetAmount) * 100)) 
+    : 0;
+  const actualPercent = targetAmount > 0 
+    ? (currentAccumulation / targetAmount) * 100 
+    : 0;
+  const remainingAmount = targetAmount > 0 ? Math.max(0, targetAmount - currentAccumulation) : 0;
 
   // Required monthly savings without interest
-  const requiredMonthlySavings = yearsRemaining > 0 
+  const requiredMonthlySavings = yearsRemaining > 0 && targetAmount > 0 
     ? Math.ceil(remainingAmount / monthsRemaining)
     : 0;
 
-  const isMonthlySavingsSufficient = monthlySavings >= requiredMonthlySavings && remainingAmount > 0;
-  const isTargetAchieved = remainingAmount <= 0;
+  const isMonthlySavingsSufficient = targetAmount > 0 && monthlySavings >= requiredMonthlySavings && remainingAmount > 0;
+  const isTargetAchieved = targetAmount > 0 && remainingAmount <= 0;
 
   // Preset Nominal Tabungan
   const NOMINAL_PRESETS = [
@@ -285,9 +289,11 @@ export function SavingsTargetCard({
                 {actualPercent.toFixed(1)}%
               </span>
               <span className="text-[11px] text-stone-300 block mt-0.5">
-                {isTargetAchieved 
-                  ? '🎉 Target Sudah Tercapai!' 
-                  : `Kurang ${formatRupiah(remainingAmount, true)} lagi`}
+                {targetAmount === 0 
+                  ? '🎯 Atur target tabungan di atas' 
+                  : isTargetAchieved 
+                    ? '🎉 Target Sudah Tercapai!' 
+                    : `Kurang ${formatRupiah(remainingAmount, true)} lagi`}
               </span>
             </div>
           </div>

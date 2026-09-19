@@ -9,7 +9,8 @@ import {
   Target, 
   Printer, 
   Award,
-  ChevronDown
+  ChevronDown,
+  Sparkles
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { formatRupiah } from '../utils/formatters';
@@ -17,7 +18,8 @@ import { formatRupiah } from '../utils/formatters';
 interface HeaderProps {
   netWorth: number;
   profile?: UserProfile;
-  onResetToDefault: () => void;
+  onResetToZero: () => void;
+  onLoadDemoData: () => void;
   onExportData: () => void;
   onImportData: () => void;
   onOpenInfoModal: () => void;
@@ -28,7 +30,8 @@ interface HeaderProps {
 export function Header({
   netWorth,
   profile,
-  onResetToDefault,
+  onResetToZero,
+  onLoadDemoData,
   onExportData,
   onImportData,
   onOpenInfoModal,
@@ -212,16 +215,30 @@ export function Header({
 
                     <div className="my-1 border-t border-stone-100" />
 
+                    <div className="px-3.5 py-1.5 text-[11px] font-bold text-neutral-400 uppercase tracking-wider border-b border-stone-100">
+                      Kelola Angka & Data
+                    </div>
                     <button
-                      id="btn-reset-default"
+                      id="btn-load-demo"
                       onClick={() => {
                         setShowSettingsDropdown(false);
-                        onResetToDefault();
+                        onLoadDemoData();
+                      }}
+                      className="w-full text-left px-3.5 py-2 hover:bg-amber-50/80 flex items-center gap-2.5 cursor-pointer text-amber-700 font-semibold transition-colors"
+                    >
+                      <Sparkles className="w-4 h-4 text-amber-500" />
+                      <span>Muat Data Simulasi / Contoh</span>
+                    </button>
+                    <button
+                      id="btn-reset-zero"
+                      onClick={() => {
+                        setShowSettingsDropdown(false);
+                        onResetToZero();
                       }}
                       className="w-full text-left px-3.5 py-2 hover:bg-red-50 flex items-center gap-2.5 cursor-pointer text-red-600 font-semibold transition-colors"
                     >
                       <RotateCcw className="w-4 h-4 text-red-500" />
-                      <span>Reset ke Data Awal</span>
+                      <span>Kosongkan Semua Angka (Mulai Rp 0)</span>
                     </button>
 
                     {/* Integrated Privacy Badge */}

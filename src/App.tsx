@@ -27,16 +27,20 @@ import {
   DEFAULT_MONTHLY_HISTORY, 
   DEFAULT_HABITS, 
   DEFAULT_FIRE_SETTINGS,
-  DEFAULT_USER_PROFILE 
+  DEFAULT_USER_PROFILE,
+  DEMO_ASSETS,
+  DEMO_LIABILITIES,
+  DEMO_MONTHLY_HISTORY,
+  DEMO_FIRE_SETTINGS,
+  DEMO_USER_PROFILE
 } from './data/defaultData';
 import { formatRupiah } from './utils/formatters';
 
-const STORAGE_KEY = 'networth_anda_financial_v1';
-const LEGACY_KEY = 'kayamuda_id_financial_v1';
+const STORAGE_KEY = 'networth_anda_financial_v2_zero';
 
 function getInitialData<T>(suffix: string, fallback: T): T {
   try {
-    const saved = localStorage.getItem(`${STORAGE_KEY}_${suffix}`) || localStorage.getItem(`${LEGACY_KEY}_${suffix}`);
+    const saved = localStorage.getItem(`${STORAGE_KEY}_${suffix}`);
     return saved ? JSON.parse(saved) : fallback;
   } catch {
     return fallback;
@@ -265,12 +269,12 @@ export default function App() {
   };
 
   // --- Handlers: Data Backup & Reset ---
-  const handleResetToDefault = () => {
-    if (window.confirm('Reset seluruh data ke simulasi awal? Semua perubahan lokal akan digantikan.')) {
+  const handleResetToZero = () => {
+    if (window.confirm('Kosongkan semua angka ke Rp 0? Seluruh aset, utang, dan target akan dimulai dari awal.')) {
       setUserProfile(DEFAULT_USER_PROFILE);
-      setAssets(DEFAULT_ASSETS);
-      setLiabilities(DEFAULT_LIABILITIES);
-      setHistory(DEFAULT_MONTHLY_HISTORY);
+      setAssets([]);
+      setLiabilities([]);
+      setHistory([]);
       setHabits(DEFAULT_HABITS);
       setFireSettings(DEFAULT_FIRE_SETTINGS);
       localStorage.removeItem(`${STORAGE_KEY}_user_profile`);
@@ -279,6 +283,16 @@ export default function App() {
       localStorage.removeItem(`${STORAGE_KEY}_history`);
       localStorage.removeItem(`${STORAGE_KEY}_habits`);
       localStorage.removeItem(`${STORAGE_KEY}_fire_settings`);
+    }
+  };
+
+  const handleLoadDemoData = () => {
+    if (window.confirm('Muat data simulasi / contoh keuangan? Data saat ini akan digantikan dengan contoh portofolio lengkap.')) {
+      setUserProfile(DEMO_USER_PROFILE);
+      setAssets(DEMO_ASSETS);
+      setLiabilities(DEMO_LIABILITIES);
+      setHistory(DEMO_MONTHLY_HISTORY);
+      setFireSettings(DEMO_FIRE_SETTINGS);
     }
   };
 
@@ -344,7 +358,8 @@ export default function App() {
       <Header
         netWorth={netWorth}
         profile={userProfile}
-        onResetToDefault={handleResetToDefault}
+        onResetToZero={handleResetToZero}
+        onLoadDemoData={handleLoadDemoData}
         onExportData={() => setExportImportModal({ isOpen: true, mode: 'export' })}
         onImportData={() => setExportImportModal({ isOpen: true, mode: 'import' })}
         onOpenInfoModal={() => setIsInfoModalOpen(true)}
