@@ -1,0 +1,6 @@
+{
+  "name": "NetWorth Anda",
+  "description": "Aplikasi pelacak nilai bersih (net worth), target bebas finansial dengan pengali fleksibel, prioritas pelunasan utang bunga tertinggi, dan checklist kebiasaan finansial. Perancang: Mario Fahmi Syahrial.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
