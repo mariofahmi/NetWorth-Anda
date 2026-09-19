@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { UserProfile } from '../types';
 import { formatRupiah } from '../utils/formatters';
+import logoMf from '../assets/logo.png';
 
 interface HeaderProps {
   netWorth: number;
@@ -47,8 +48,8 @@ export function Header({
           
           {/* 1. Left: Brand & Luxury Designer Signature */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-red-600 via-rose-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-red-500/25 ring-2 ring-red-500/10 shrink-0">
-              <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-white flex items-center justify-center shadow-md shadow-stone-900/10 ring-2 ring-stone-200/80 overflow-hidden shrink-0 p-1">
+              <img src={logoMf} alt="MF Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
@@ -61,8 +62,8 @@ export function Header({
                   className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-stone-900 via-neutral-900 to-stone-900 text-white shadow-2xs border border-amber-400/40 text-[10px] whitespace-nowrap hover:border-amber-400 transition-all group"
                   title="Perancang Aplikasi: Mario Fahmi Syahrial"
                 >
-                  <div className="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-amber-400 to-orange-400 flex items-center justify-center text-stone-950 shrink-0">
-                    <Award className="w-2.5 h-2.5 stroke-[2.5]" />
+                  <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center overflow-hidden shrink-0 p-0.5 ring-1 ring-amber-400">
+                    <img src={logoMf} alt="MF" className="w-full h-full object-contain" />
                   </div>
                   <span className="text-[9px] uppercase tracking-wider text-neutral-400 font-bold">
                     Perancang

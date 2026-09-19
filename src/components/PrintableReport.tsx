@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { AssetItem, LiabilityItem, FireSettings, UserProfile } from '../types';
 import { formatRupiah, ASSET_CATEGORIES, LIABILITY_CATEGORIES } from '../utils/formatters';
+import logoMf from '../assets/logo.png';
 
 interface PrintableReportProps {
   isOpen: boolean;
@@ -97,19 +98,24 @@ export function PrintableReport({
           
           {/* Document Header */}
           <div className="border-b-2 border-neutral-900 pb-5 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black uppercase tracking-widest text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded">
-                  Dokumen Privat & Rahasia
-                </span>
-                <span className="text-xs text-neutral-500">• NetWorth Anda</span>
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-white p-1 flex items-center justify-center shrink-0 border border-stone-300 shadow-sm overflow-hidden">
+                <img src={logoMf} alt="MF Logo" className="w-full h-full object-contain" />
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-neutral-900 mt-2">
-                Neraca Keuangan Pribadi & Audit Finansial
-              </h1>
-              <p className="text-xs text-neutral-600 mt-1">
-                Laporan Komprehensif Aset, Liabilitas, Rasio Solvabilitas, dan Peta Jalan Bebas Finansial (FIRE)
-              </p>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black uppercase tracking-widest text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded">
+                    Dokumen Privat & Rahasia
+                  </span>
+                  <span className="text-xs text-neutral-500">• NetWorth Anda</span>
+                </div>
+                <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-neutral-900 mt-1">
+                  Neraca Keuangan Pribadi & Audit Finansial
+                </h1>
+                <p className="text-xs text-neutral-600 mt-0.5">
+                  Laporan Komprehensif Aset, Liabilitas, Rasio Solvabilitas, dan Peta Jalan Bebas Finansial (FIRE)
+                </p>
+              </div>
             </div>
 
             <div className="text-right sm:text-right shrink-0 space-y-0.5">

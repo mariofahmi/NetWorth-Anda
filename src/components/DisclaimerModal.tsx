@@ -12,6 +12,7 @@ import {
   FileText,
   Lock
 } from 'lucide-react';
+import logoMf from '../assets/logo.png';
 
 interface DisclaimerModalProps {
   isOpen: boolean;
@@ -76,8 +77,8 @@ export function DisclaimerModal({
         {/* Header */}
         <div className="bg-gradient-to-r from-stone-900 via-neutral-800 to-stone-900 p-5 sm:p-6 text-white flex items-center justify-between shrink-0 border-b border-stone-800">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0 shadow-inner">
-              <ShieldAlert className="w-6 h-6" />
+            <div className="w-12 h-12 rounded-2xl bg-white p-1 flex items-center justify-center shrink-0 shadow-md ring-2 ring-amber-400/40 overflow-hidden">
+              <img src={logoMf} alt="MF Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
