@@ -94,14 +94,20 @@ export function Header({
                   <Target className="w-3 h-3" />
                 </div>
                 <span className="text-neutral-600 font-medium">
-                  Target <strong className="text-neutral-900 font-bold">{profile.targetYear}</strong>:
+                  {profile.targetYear > 0 ? (
+                    <>Target <strong className="text-neutral-900 font-bold">{profile.targetYear}</strong>:</>
+                  ) : (
+                    <>Target Tabungan:</>
+                  )}
                 </span>
                 <span className="font-black text-red-700">
-                  {formatRupiah(profile.savingsTargetAmount, true)}
+                  {profile.savingsTargetAmount > 0 ? formatRupiah(profile.savingsTargetAmount, true) : 'Atur Target'}
                 </span>
-                <span className="text-[10px] bg-amber-100 text-amber-900 font-bold px-1.5 py-0.5 rounded-full">
-                  {profile.age} thn
-                </span>
+                {profile.age > 0 && (
+                  <span className="text-[10px] bg-amber-100 text-amber-900 font-bold px-1.5 py-0.5 rounded-full">
+                    {profile.age} thn
+                  </span>
+                )}
               </button>
 
               <div className="flex items-center gap-1.5 bg-stone-100 px-3.5 py-1.5 rounded-full border border-stone-200 text-xs font-semibold">

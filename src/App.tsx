@@ -36,7 +36,7 @@ import {
 } from './data/defaultData';
 import { formatRupiah } from './utils/formatters';
 
-const STORAGE_KEY = 'networth_anda_financial_v2_zero';
+const STORAGE_KEY = 'networth_anda_financial_v3_clean';
 
 function getInitialData<T>(suffix: string, fallback: T): T {
   try {

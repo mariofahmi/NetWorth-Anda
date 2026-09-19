@@ -1,10 +1,10 @@
 import { AssetItem, LiabilityItem, MonthlyHistoryPoint, HabitItem, FireSettings, UserProfile } from '../types';
 
 export const DEFAULT_USER_PROFILE: UserProfile = {
-  name: 'Mario Fahmi Syahrial',
-  age: 28,
+  name: '',                         // Kosongkan agar pengguna baru yang mengisi
+  age: 0,                           // Kosongkan (0)
   savingsTargetAmount: 0,           // Rp 0 (Mulai dari nol)
-  targetYear: 2030,                 // Target tahun 2030
+  targetYear: 0,                    // Kosongkan (0)
   targetTitle: 'Target Kemandirian Finansial',
   notes: 'Mulai catat aset dan rencana tabungan untuk masa depan finansial Anda.',
 };

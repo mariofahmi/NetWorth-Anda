@@ -29,9 +29,9 @@ export function SavingsTargetCard({
   const currentYear = 2026; // Current simulation year anchor
   
   // Calculate remaining years and target age
-  const yearsRemaining = Math.max(0, profile.targetYear - currentYear);
+  const yearsRemaining = profile.targetYear > currentYear ? profile.targetYear - currentYear : 0;
   const monthsRemaining = Math.max(1, yearsRemaining * 12);
-  const ageAtTarget = profile.age + yearsRemaining;
+  const ageAtTarget = profile.age > 0 && profile.targetYear > 0 ? profile.age + yearsRemaining : 0;
 
   // Calculate target progress
   const targetAmount = profile.savingsTargetAmount;
@@ -97,10 +97,14 @@ export function SavingsTargetCard({
         <div className="flex items-center gap-2 bg-stone-50 border border-stone-200 px-3 py-1.5 rounded-xl text-xs self-start sm:self-center">
           <Flag className="w-4 h-4 text-red-600 shrink-0" />
           <span className="text-neutral-600">
-            Target Tahun <strong className="text-neutral-900 font-bold">{profile.targetYear}</strong>:
+            {profile.targetYear > 0 ? (
+              <>Target Tahun <strong className="text-neutral-900 font-bold">{profile.targetYear}</strong>:</>
+            ) : (
+              <>Target Tabungan:</>
+            )}
           </span>
           <span className="text-red-700 font-bold">
-            {formatRupiah(profile.savingsTargetAmount)}
+            {profile.savingsTargetAmount > 0 ? formatRupiah(profile.savingsTargetAmount) : 'Rp 0'}
           </span>
         </div>
       </div>
@@ -109,26 +113,47 @@ export function SavingsTargetCard({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         
         {/* 1. Input NAMA */}
-        <div className="bg-stone-50 rounded-xl p-4 border border-stone-200 flex flex-col justify-between">
+        <div className={`rounded-xl p-4 border flex flex-col justify-between transition-all ${
+          !profile.name?.trim() 
+            ? 'bg-rose-50/50 border-rose-300 ring-2 ring-rose-200/60' 
+            : 'bg-stone-50 border-stone-200'
+        }`}>
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label htmlFor="input-profile-name" className="block text-xs font-bold text-neutral-700 uppercase tracking-wider">
-                Nama Lengkap
+              <label htmlFor="input-profile-name" className="block text-xs font-black text-neutral-800 uppercase tracking-wider flex items-center gap-1.5">
+                <span>Nama Lengkap</span>
+                <span className="text-red-600 font-extrabold text-[11px] bg-red-100/90 px-1.5 py-0.2 rounded">
+                  * Wajib Diisi
+                </span>
               </label>
-              <User className="w-4 h-4 text-neutral-400" />
+              <User className={`w-4 h-4 ${!profile.name?.trim() ? 'text-red-500 animate-pulse' : 'text-neutral-400'}`} />
             </div>
             <input
               type="text"
               id="input-profile-name"
               value={profile.name}
               onChange={(e) => onUpdateProfile({ name: e.target.value })}
-              placeholder="Masukkan nama Anda"
-              className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm font-bold text-neutral-800 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+              placeholder="Masukkan nama Anda..."
+              className={`w-full bg-white border rounded-lg px-3 py-2 text-sm font-bold text-neutral-800 focus:outline-none transition-all ${
+                !profile.name?.trim()
+                  ? 'border-red-400 focus:ring-2 focus:ring-red-500 placeholder:text-neutral-400'
+                  : 'border-stone-300 focus:ring-2 focus:ring-red-500'
+              }`}
             />
           </div>
-          <span className="text-[11px] text-neutral-500 mt-2 block">
-            Nama pemilik rencana tabungan ini
-          </span>
+          <div className="mt-2">
+            {!profile.name?.trim() ? (
+              <span className="text-[11px] text-red-600 font-bold flex items-center gap-1">
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                Wajib memasukkan nama Anda
+              </span>
+            ) : (
+              <span className="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                Nama pemilik rencana tabungan
+              </span>
+            )}
+          </div>
         </div>
 
         {/* 2. Input USIA */}
@@ -145,11 +170,12 @@ export function SavingsTargetCard({
                 type="number"
                 inputMode="numeric"
                 id="input-profile-age"
-                min="10"
+                min="1"
                 max="100"
-                value={profile.age}
+                value={profile.age > 0 ? profile.age : ''}
+                placeholder="Contoh: 28"
                 onChange={(e) => {
-                  const val = Math.max(1, parseInt(e.target.value, 10) || 1);
+                  const val = e.target.value === '' ? 0 : Math.max(0, parseInt(e.target.value, 10) || 0);
                   onUpdateProfile({ age: val });
                 }}
                 className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-base font-bold text-neutral-800 focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -158,8 +184,14 @@ export function SavingsTargetCard({
             </div>
           </div>
           <div className="text-[11px] text-neutral-600 mt-2 flex justify-between items-center">
-            <span>Usia saat target tercapai:</span>
-            <strong className="text-red-700 font-bold">{ageAtTarget} tahun</strong>
+            {profile.age > 0 && ageAtTarget > 0 ? (
+              <>
+                <span>Usia saat target:</span>
+                <strong className="text-red-700 font-bold">{ageAtTarget} tahun</strong>
+              </>
+            ) : (
+              <span className="text-neutral-400">Masukkan usia Anda saat ini</span>
+            )}
           </div>
         </div>
 
@@ -179,16 +211,19 @@ export function SavingsTargetCard({
                 id="input-target-year"
                 min={currentYear}
                 max={currentYear + 50}
-                value={profile.targetYear}
+                value={profile.targetYear > 0 ? profile.targetYear : ''}
+                placeholder="Contoh: 2030"
                 onChange={(e) => {
-                  const val = Math.max(currentYear, parseInt(e.target.value, 10) || currentYear);
+                  const val = e.target.value === '' ? 0 : Math.max(0, parseInt(e.target.value, 10) || 0);
                   onUpdateProfile({ targetYear: val });
                 }}
                 className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-base font-bold text-neutral-800 focus:outline-none focus:ring-2 focus:ring-red-500"
               />
-              <span className="text-xs font-bold text-neutral-600 shrink-0">
-                {yearsRemaining > 0 ? `(${yearsRemaining} thn lagi)` : '(Tahun ini)'}
-              </span>
+              {profile.targetYear > 0 && (
+                <span className="text-xs font-bold text-neutral-600 shrink-0">
+                  {yearsRemaining > 0 ? `(${yearsRemaining} thn lagi)` : '(Tahun ini)'}
+                </span>
+              )}
             </div>
           </div>
 
@@ -272,13 +307,22 @@ export function SavingsTargetCard({
             <div>
               <span className="text-xs font-semibold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                Target Tabungan: {profile.name || 'Pengguna'}
+                Target Tabungan: {profile.name?.trim() ? profile.name : '(Nama Belum Diisi)'}
               </span>
               <div className="text-2xl sm:text-3xl font-black text-white mt-1">
                 {formatRupiah(profile.savingsTargetAmount)}
               </div>
               <p className="text-xs text-stone-300 mt-1">
-                Target tercapai pada tahun <strong className="text-amber-300">{profile.targetYear}</strong> (saat usia <strong className="text-amber-300">{ageAtTarget} tahun</strong>, tersisa {yearsRemaining} tahun lagi).
+                {profile.targetYear > 0 ? (
+                  <>
+                    Target tercapai pada tahun <strong className="text-amber-300">{profile.targetYear}</strong>
+                    {profile.age > 0 && (
+                      <> (saat usia <strong className="text-amber-300">{ageAtTarget} tahun</strong>, tersisa {yearsRemaining} tahun lagi)</>
+                    )}.
+                  </>
+                ) : (
+                  <>Silakan tentukan nama, usia, target tahun, dan nominal tabungan Anda di atas.</>
+                )}
               </p>
             </div>
 
